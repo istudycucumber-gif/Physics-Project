@@ -1,0 +1,544 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;1,300&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  .pr{font-family:'Source Serif 4',serif;color:var(--color-text-primary);max-width:860px;margin:0 auto;padding:0 0 4rem}
+  .cover{text-align:center;padding:3.5rem 1.5rem 3rem;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:3rem}
+  .cover-icon{font-size:52px;color:#185FA5;margin-bottom:1rem}
+  .cover-badge{display:inline-block;background:#E6F1FB;color:#0C447C;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:4px 16px;border-radius:20px;margin-bottom:1rem;font-family:var(--font-sans)}
+  .cover h1{font-family:'Playfair Display',serif;font-size:42px;font-weight:700;line-height:1.15;margin-bottom:.75rem}
+  .cover-sub{font-size:16px;color:var(--color-text-secondary);font-style:italic;margin-bottom:.75rem}
+  .cover-sub2{font-size:14px;color:var(--color-text-secondary);font-family:var(--font-sans);max-width:580px;margin:0 auto 2rem;line-height:1.7}
+  .meta-row{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap}
+  .meta-item{font-family:var(--font-sans);font-size:12px;color:var(--color-text-secondary);text-align:center}
+  .meta-item strong{display:block;font-size:13px;color:var(--color-text-primary);font-weight:500;margin-bottom:2px}
+  .toc{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);padding:1.5rem 2rem;margin-bottom:3rem}
+  .toc h3{font-family:var(--font-sans);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-secondary);margin-bottom:1rem;font-weight:500}
+  .toc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:6px 2rem}
+  .toc-item{font-size:14px;color:#185FA5;cursor:pointer;padding:4px 0;display:flex;align-items:center;gap:8px;font-family:var(--font-sans)}
+  .toc-num{font-size:11px;color:var(--color-text-secondary);min-width:20px}
+  .section{margin-bottom:3rem}
+  .section-header{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.5rem;padding-bottom:.85rem;border-bottom:0.5px solid var(--color-border-tertiary)}
+  .section-num{font-family:'Playfair Display',serif;font-size:36px;font-weight:400;color:var(--color-border-secondary);line-height:1;min-width:44px}
+  .section-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;line-height:1.25}
+  .section-subtitle{font-size:13px;color:var(--color-text-secondary);font-style:italic;font-family:var(--font-sans);margin-top:3px}
+  .prose{font-size:15px;line-height:1.9;color:var(--color-text-primary)}
+  .prose p{margin-bottom:1.1rem}
+  .formula-box{background:var(--color-background-secondary);border-left:3px solid #185FA5;border-radius:0 var(--border-radius-md) var(--border-radius-md) 0;padding:1.1rem 1.4rem;margin:1.4rem 0}
+  .formula-label{font-family:var(--font-sans);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#185FA5;margin-bottom:6px;font-weight:500}
+  .formula-text{font-family:var(--font-mono);font-size:16px;color:var(--color-text-primary);font-weight:500;letter-spacing:.04em;margin-bottom:6px}
+  .formula-desc{font-size:13px;color:var(--color-text-secondary);font-family:var(--font-sans);line-height:1.7}
+  .formula-extra{font-size:13px;color:var(--color-text-secondary);font-family:var(--font-sans);line-height:1.7;margin-top:8px;padding-top:8px;border-top:0.5px solid var(--color-border-tertiary)}
+  .pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.4rem 0}
+  @media(max-width:500px){.pros-cons{grid-template-columns:1fr}}
+  .pc-card{border-radius:var(--border-radius-md);padding:1.1rem 1.2rem;border:0.5px solid var(--color-border-tertiary)}
+  .pc-card.pros{background:#EAF3DE;border-color:#3B6D11}
+  .pc-card.cons{background:#FCEBEB;border-color:#A32D2D}
+  .pc-title{font-family:var(--font-sans);font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  .pc-card.pros .pc-title{color:#27500A}
+  .pc-card.cons .pc-title{color:#791F1F}
+  .pc-list{list-style:none;font-size:13.5px;line-height:1.75}
+  .pc-card.pros .pc-list{color:#3B6D11}
+  .pc-card.cons .pc-list{color:#A32D2D}
+  .pc-list li{padding:3px 0 3px 16px;position:relative}
+  .pc-list li::before{content:'—';position:absolute;left:0;opacity:.6}
+  .apps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;margin:1.4rem 0}
+  .app-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:1rem 1rem 0.9rem;text-align:center}
+  .app-icon{font-size:22px;color:#185FA5;margin-bottom:8px}
+  .app-name{font-family:var(--font-sans);font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+  .app-desc{font-family:var(--font-sans);font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+  .hq{border-left:3px solid #E24B4A;padding:.85rem 1.3rem;margin:1.3rem 0;font-style:italic;font-size:15px;color:var(--color-text-secondary);background:var(--color-background-secondary);border-radius:0 var(--border-radius-md) var(--border-radius-md) 0}
+  .hq2{border-left:3px solid #1D9E75;padding:.85rem 1.3rem;margin:1.3rem 0;font-style:italic;font-size:15px;color:var(--color-text-secondary);background:var(--color-background-secondary);border-radius:0 var(--border-radius-md) var(--border-radius-md) 0}
+  .divider{height:0.5px;background:var(--color-border-tertiary);margin:3rem 0}
+  .callout{background:#E6F1FB;border-radius:var(--border-radius-md);padding:1rem 1.25rem;margin:1.25rem 0;display:flex;gap:12px;align-items:flex-start}
+  .callout-icon{font-size:18px;color:#185FA5;margin-top:2px;flex-shrink:0}
+  .callout-text{font-family:var(--font-sans);font-size:13.5px;color:#0C447C;line-height:1.7}
+  .stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:1.25rem 0}
+  .stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.9rem 1rem;text-align:center}
+  .stat-val{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#185FA5}
+  .stat-label{font-family:var(--font-sans);font-size:12px;color:var(--color-text-secondary);margin-top:4px}
+  .tag-row{display:flex;flex-wrap:wrap;gap:6px;margin:1rem 0}
+  .tag{background:#E6F1FB;color:#0C447C;font-family:var(--font-sans);font-size:12px;padding:3px 11px;border-radius:20px}
+  .conclusion{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:2rem 2.25rem;margin-top:2.5rem;border:0.5px solid var(--color-border-tertiary)}
+  .conclusion h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:1.1rem}
+  .refs{margin-top:1.5rem;padding-top:1.5rem;border-top:0.5px solid var(--color-border-tertiary)}
+  .refs h4{font-family:var(--font-sans);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--color-text-secondary);margin-bottom:.75rem;font-weight:500}
+  .refs ul{list-style:none;font-size:13px;color:var(--color-text-secondary);line-height:1.9}
+  .refs li::before{content:'↗ ';color:#185FA5}
+  .subsection-title{font-family:var(--font-sans);font-size:14px;font-weight:500;color:var(--color-text-primary);margin:1.5rem 0 .5rem;border-bottom:0.5px solid var(--color-border-tertiary);padding-bottom:.4rem}
+  .exp-table{width:100%;border-collapse:collapse;font-size:13px;font-family:var(--font-sans);margin:1.25rem 0}
+  .exp-table th{text-align:left;padding:8px 10px;background:var(--color-background-secondary);color:var(--color-text-secondary);font-weight:500;border-bottom:0.5px solid var(--color-border-tertiary)}
+  .exp-table td{padding:8px 10px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:top}
+  .exp-table tr:last-child td{border-bottom:none}
+</style>
+
+<div class="pr">
+
+<div class="cover">
+  <div class="cover-icon"><i class="ti ti-bolt" aria-hidden="true"></i></div>
+  <div class="cover-badge">Class XII Physics · Project Report · 2025–26</div>
+  <h1>Electromagnetic<br>Induction</h1>
+  <p class="cover-sub">The invisible force that powers the modern world.</p>
+  <p class="cover-sub2">A comprehensive study of the principles, laws, and applications of electromagnetic induction — from Faraday's groundbreaking discovery in 1831 to the wireless chargers and maglev trains of today. This project explores six interconnected concepts that together explain how a simple change in magnetic flux gave humanity the ability to generate, transmit, and transform electrical energy at will.</p>
+  <div class="meta-row">
+    <div class="meta-item"><strong>Subject</strong>Physics (Class XII)</div>
+    <div class="meta-item"><strong>Chapter Reference</strong>Ch. 6 — NCERT</div>
+    <div class="meta-item"><strong>Topics Covered</strong>6 Core Concepts</div>
+    <div class="meta-item"><strong>Formulas Included</strong>12+</div>
+    <div class="meta-item"><strong>Session</strong>2025–26</div>
+  </div>
+</div>
+
+<div class="toc">
+  <h3>Table of Contents</h3>
+  <div class="toc-grid">
+    <a class="toc-item" onclick="document.getElementById('s1').scrollIntoView({behavior:'smooth'})"><span class="toc-num">01</span>Introduction & Background</a>
+    <a class="toc-item" onclick="document.getElementById('s2').scrollIntoView({behavior:'smooth'})"><span class="toc-num">02</span>Faraday's Laws</a>
+    <a class="toc-item" onclick="document.getElementById('s3').scrollIntoView({behavior:'smooth'})"><span class="toc-num">03</span>Lenz's Law</a>
+    <a class="toc-item" onclick="document.getElementById('s4').scrollIntoView({behavior:'smooth'})"><span class="toc-num">04</span>Eddy Currents</a>
+    <a class="toc-item" onclick="document.getElementById('s5').scrollIntoView({behavior:'smooth'})"><span class="toc-num">05</span>Self-Induction</a>
+    <a class="toc-item" onclick="document.getElementById('s6').scrollIntoView({behavior:'smooth'})"><span class="toc-num">06</span>Mutual Induction</a>
+    <a class="toc-item" onclick="document.getElementById('s7').scrollIntoView({behavior:'smooth'})"><span class="toc-num">07</span>Conclusion & References</a>
+  </div>
+</div>
+
+<div class="section" id="s1">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div>
+      <div class="section-title">Introduction to Electromagnetic Induction</div>
+      <div class="section-subtitle">How a changing magnetic field creates electricity — the discovery that lit up the world</div>
+    </div>
+  </div>
+  <div class="prose">
+    <p>Electromagnetic induction is the process by which a time-varying magnetic field produces an electromotive force (EMF) in a conductor — and, if the circuit is closed, a resulting electric current. It is the physical bridge between magnetism and electricity, and the operating principle behind almost every device that generates or uses electrical power on Earth.</p>
+    <p>The phenomenon was independently and simultaneously discovered by two scientists working thousands of miles apart: <strong>Michael Faraday</strong> in the Royal Institution, London, and <strong>Joseph Henry</strong> in the United States, both in 1831. Faraday published first and received primary credit. His famous experiment involved moving a bar magnet in and out of a coil connected to a galvanometer — the needle deflected whenever the magnet moved, but not when it was stationary. That observation was the seed from which the entire electrical age grew.</p>
+    <p>Before this discovery, electricity and magnetism were considered completely separate forces. Faraday's work — and the later mathematical framework provided by James Clerk Maxwell in his 1865 equations — unified them into a single electromagnetic theory. Today, electromagnetic induction is the mechanism behind AC generators, all electrical transformers, induction motors, induction cooktops, wireless chargers, metal detectors, MRI machines, and the electrical power grid that delivers energy to every home and factory on the planet.</p>
+    <p>The central concept behind electromagnetic induction is <em>magnetic flux</em> — a measure of the total magnetic field passing through a given surface area. Induction does not occur due to the presence of a field, but due to a change in that field. This distinction is crucial and often misunderstood by beginners.</p>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat"><div class="stat-val">1831</div><div class="stat-label">Year of discovery by Faraday</div></div>
+    <div class="stat"><div class="stat-val">Wb</div><div class="stat-label">SI unit of magnetic flux (Weber)</div></div>
+    <div class="stat"><div class="stat-val">H</div><div class="stat-label">SI unit of inductance (Henry)</div></div>
+    <div class="stat"><div class="stat-val">V</div><div class="stat-label">SI unit of induced EMF (Volt)</div></div>
+  </div>
+
+  <div class="formula-box">
+    <div class="formula-label">Key Quantity — Magnetic Flux</div>
+    <div class="formula-text">Φ = B · A · cos θ</div>
+    <div class="formula-desc">Φ = Magnetic flux (Weber, Wb) | B = Magnetic field strength (Tesla, T) | A = Area of the loop (m²) | θ = Angle between the magnetic field vector B and the outward normal to the surface.</div>
+    <div class="formula-extra">Special cases: When B is perpendicular to the surface (θ = 0°), Φ = BA (maximum flux). When B is parallel to the surface (θ = 90°), Φ = 0 (no flux passes through). Flux is a scalar quantity even though both B and A are vectors — it is their dot product.</div>
+  </div>
+
+  <div class="callout">
+    <i class="ti ti-info-circle callout-icon" aria-hidden="true"></i>
+    <div class="callout-text">Flux linkage (NΦ) is used when dealing with coils of N turns. Each turn contributes its own flux, so the total flux linked with the coil is N times the flux through a single loop. All induction formulas use NΦ (flux linkage), not just Φ.</div>
+  </div>
+
+  <div class="tag-row">
+    <span class="tag">EMF</span><span class="tag">Magnetic Flux</span><span class="tag">Flux Linkage</span><span class="tag">Conductor</span><span class="tag">Michael Faraday</span><span class="tag">Joseph Henry</span><span class="tag">Maxwell's Equations</span><span class="tag">1831</span>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section" id="s2">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <div>
+      <div class="section-title">Faraday's Laws of Electromagnetic Induction</div>
+      <div class="section-subtitle">The quantitative laws that define when and how much EMF is induced</div>
+    </div>
+  </div>
+  <div class="prose">
+    <p>Through systematic experimentation, Michael Faraday established two fundamental laws that together describe the relationship between changing magnetic flux and induced EMF. These laws are the mathematical heart of electromagnetic induction.</p>
+
+    <p><strong>Faraday's First Law:</strong> Whenever the magnetic flux linked with a closed circuit changes — regardless of what causes that change — an electromotive force (EMF) is induced in the circuit. The induced EMF exists only as long as the flux continues to change; it ceases the moment flux becomes constant. The cause of change can be: moving a magnet near a coil, moving a coil in a magnetic field, changing the area of a coil in a field, changing the angle of a coil relative to the field, or changing the current in a nearby coil that produces the field.</p>
+
+    <p><strong>Faraday's Second Law:</strong> The magnitude of the induced EMF is directly proportional to the rate of change of the total flux linkage (NΦ) with respect to time. The faster the flux changes, the larger the induced EMF. Doubling the speed of a magnet through a coil doubles the EMF. Doubling the number of turns in the coil also doubles the EMF, because each turn contributes its own changing flux.</p>
+
+    <p>A practical consequence: in an AC generator, the coil rotates inside a magnetic field. As it rotates, the angle θ (between B and the normal to the coil) changes continuously, producing a continuously varying flux — and therefore a continuously varying (alternating) EMF. The faster the rotation, the higher the frequency and the greater the peak voltage. This is exactly how the electricity in your home is generated at power stations.</p>
+  </div>
+
+  <div class="formula-box">
+    <div class="formula-label">Faraday's Second Law — Induced EMF</div>
+    <div class="formula-text">ε = −N · (dΦ/dt)</div>
+    <div class="formula-desc">ε = Induced EMF (Volts) | N = Number of turns in the coil | dΦ/dt = Rate of change of flux through one turn (Wb/s = V) | The product NΦ is called the flux linkage (unit: Weber-turns).</div>
+    <div class="formula-extra">For a coil rotating with angular velocity ω in a uniform field B: ε = NBAω sin(ωt). This is the equation of an AC generator — a sinusoidal EMF arises naturally from uniform rotation. Peak EMF is ε₀ = NBAω.</div>
+  </div>
+
+  <div class="formula-box">
+    <div class="formula-label">Average Induced EMF (for finite changes)</div>
+    <div class="formula-text">ε_avg = −N · (ΔΦ/Δt)</div>
+    <div class="formula-desc">Used when flux changes by a finite amount ΔΦ over a time interval Δt. This is the form used in most Class XII numerical problems. If a coil of 200 turns sees its flux drop from 5 mWb to 2 mWb in 0.1 s, the average EMF = −200 × (−3×10⁻³)/0.1 = 6 V.</div>
+  </div>
+
+  <div class="hq">"The laws of Faraday are among the most important laws in physics. They tell us, with beautiful simplicity, that changing magnetism produces electricity. All of our generators, all of our transformers, run on those four words." — Richard Feynman (paraphrased)</div>
+
+  <div class="subsection-title">Experimental verification of Faraday's laws</div>
+  <div class="prose">
+    <p>Faraday's original experiment used two coils wound around an iron ring (an early transformer). When he connected one coil to a battery, a galvanometer in the second coil deflected — but only momentarily, at the instant of switching. This proved it was the change in current (and hence flux) that caused induction, not the steady current itself. He later confirmed that simply moving a magnet in and out of a coil produced the same galvanometer deflection, establishing that relative motion between a conductor and a magnetic field is sufficient to cause induction.</p>
+  </div>
+
+  <div class="pros-cons">
+    <div class="pc-card pros">
+      <div class="pc-title"><i class="ti ti-circle-check" aria-hidden="true"></i> Advantages & significance</div>
+      <ul class="pc-list">
+        <li>Entire electrical power generation industry is built on these two laws</li>
+        <li>Elegant and mathematically compact — one equation covers all cases</li>
+        <li>Universally applicable: any conductor, any shape, any scale</li>
+        <li>Scales from nano-scale sensors to multi-gigawatt generators</li>
+        <li>Directly derivable from Maxwell's more general equations</li>
+        <li>Allows quantitative prediction of induced EMF in any geometry</li>
+      </ul>
+    </div>
+    <div class="pc-card cons">
+      <div class="pc-title"><i class="ti ti-alert-circle" aria-hidden="true"></i> Limitations to note</div>
+      <ul class="pc-list">
+        <li>Requires continuous mechanical input — no perpetual motion possible</li>
+        <li>Energy losses always present due to resistance in real coils</li>
+        <li>Assumes quasi-static conditions — breaks down at relativistic speeds</li>
+        <li>Idealized: ignores fringe magnetic effects at coil edges</li>
+        <li>Does not predict the direction of induced current (Lenz's Law needed)</li>
+        <li>Cannot be applied to moving conductors without careful treatment</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="apps-grid">
+    <div class="app-card"><div class="app-icon"><i class="ti ti-windmill" aria-hidden="true"></i></div><div class="app-name">AC generators</div><div class="app-desc">Rotating coils in magnetic fields generate sinusoidal EMF at power stations</div></div>
+    <div class="app-card"><div class="app-icon"><i class="ti ti-plug" aria-hidden="true"></i></div><div class="app-name">Transformers</div><div class="app-desc">Step up or step down AC voltage for efficient long-distance transmission</div></div>
+    <div class="app-card"><div class="app-icon"><i class="ti ti-device-mobile-charging" aria-hidden="true"></i></div><div class="app-name">Wireless charging</div><div class="app-desc">Qi inductive pads use changing flux to charge phones without cables</div></div>
+    <div class="app-card"><div class="app-icon"><i class="ti ti-wave-sine" aria-hidden="true"></i></div><div class="app-name">Microphone pickups</div><div class="app-desc">Sound vibrates a diaphragm near a coil, inducing an audio-frequency EMF</div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section" id="s3">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <div>
+      <div class="section-title">Lenz's Law</div>
+      <div class="section-subtitle">Nature always opposes the change — conservation of energy expressed electromagnetically</div>
+    </div>
+  </div>
+  <div class="prose">
+    <p>Lenz's Law, formulated by the Baltic German physicist <strong>Heinrich Friedrich Emil Lenz</strong> in 1834, provides the physical direction of the induced current that Faraday's laws quantify but do not specify. It states: <em>The direction of the induced current in a circuit is always such as to oppose the change in magnetic flux that caused it.</em></p>
+    <p>This law is not an independent principle — it is, at its core, a statement of the conservation of energy applied to electromagnetic induction. If the induced current were to aid the flux change rather than oppose it, energy would be created from nothing, violating the first law of thermodynamics. Nature therefore ensures that induction always acts as a brake on the very process that produces it.</p>
+    <p>Consider a magnet moving toward a coil: the increasing flux through the coil induces a current that creates a magnetic field opposing the approaching magnet — repelling it. To push the magnet closer, you must do work against this repulsion. That work is exactly the electrical energy generated in the coil. The energy comes from your hand, not from nowhere. When the magnet is pulled away, the decreasing flux induces a current that creates a field attracting the magnet — again, you must do work (to pull against the attraction), and that work again becomes electrical energy.</p>
+    <p>Lenz's Law is also responsible for the feeling of resistance when you try to turn an electric generator by hand — the more current it supplies, the more it resists being turned. A generator that powers nothing is very easy to spin; one driving a heavy load requires significant torque. This is why power stations need enormous steam or water turbines.</p>
+  </div>
+
+  <div class="formula-box">
+    <div class="formula-label">Lenz's Law — the meaning of the negative sign</div>
+    <div class="formula-text">ε = −dΦ/dt &nbsp; (single turn) &nbsp;&nbsp;|&nbsp;&nbsp; ε = −N · dΦ/dt &nbsp; (N turns)</div>
+    <div class="formula-desc">The negative sign is not merely a mathematical convention — it encodes Lenz's Law. If dΦ/dt is positive (flux increasing), the induced EMF is negative (opposes the increase). If dΦ/dt is negative (flux decreasing), the induced EMF is positive (tries to maintain the flux).</div>
+    <div class="formula-extra">Determining direction — use the right-hand rule: curl the fingers of the right hand in the direction of the induced current; the thumb points in the direction of the resulting magnetic field, which must oppose the flux change. Alternatively, use Fleming's Right-Hand Rule for generators.</div>
+  </div>
+
+  <div class="callout">
+    <i class="ti ti-bulb callout-icon" aria-hidden="true"></i>
+    <div class="callout-text">Lenz's Law is a special case of Le Chatelier's Principle in chemistry: when a system is disturbed, it responds in a way that tends to counteract the disturbance. In electromagnetism, the "system" is the coil and its flux; the "disturbance" is the change in flux; the "response" is the opposing induced current.</div>
+  </div>
+
+  <div class="hq2">"Lenz's law is one of the clearest demonstrations in all of physics that the universe does not give anything for free. Every electron pushed by an induced current had to be pushed by someone's muscles or a turbine, somewhere."</div>
+
+  <div class="subsection-title">Lenz's law and back-EMF in motors</div>
+  <div class="prose">
+    <p>In an electric motor, the rotating coil itself generates an EMF (called back-EMF or counter-EMF) that opposes the applied voltage — a direct consequence of Lenz's Law. When the motor starts, there is no back-EMF and a large current flows (which is why motors draw heavy current at startup). As the motor speeds up, back-EMF grows and the net current (and torque) decreases. At full speed, the back-EMF nearly equals the supply voltage — the motor reaches its operating point. This self-regulating behaviour is entirely due to Lenz's Law.</p>
+  </div>
+
+  <div class="pros-cons">
+    <div class="pc-card pros">
+      <div class="pc-title"><i class="ti ti-circle-check" aria-hidden="true"></i> Significance & uses</div>
+      <ul class="pc-list">
+        <li>Proves conservation of energy in electromagnetic phenomena</li>
+        <li>Determines direction of induced current — essential for circuit design</li>
+        <li>Basis of all electromagnetic braking and damping systems</li>
+        <li>Explains back-EMF in motors and its self-regulating effect</li>
+        <li>Used in regenerative braking — recovers kinetic energy as electricity</li>
+        <li>Prevents runaway electrical feedback in generators</li>
+      </ul>
+    </div>
+    <div class="pc-card cons">
+      <div class="pc-title"><i class="ti ti-alert-circle" aria-hidden="true"></i> Practical drawbacks</div>
+      <ul class="pc-list">
+        <li>Always produces an opposing force — some energy must overcome it</li>
+        <li>Reduces efficiency of motors (back-EMF vs. applied voltage)</li>
+        <li>Requires extra starting torque or current-limiting resistors</li>
+        <li>Causes inductive voltage spikes when current is suddenly interrupted</li>
+        <li>Can damage transistors/switches in circuits if not suppressed (flyback diode needed)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="apps-grid">
+    <div class="app-card"><div class="app-icon"><i class="ti ti-train" aria-hidden="true"></i></div><div class="app-name">Maglev braking</div><div class="app-desc">Eddy-current and flux opposition slow high-speed trains with no mechanical contact</div></div>
+    <div class="app-card"><div class="app-icon"><i class="ti ti-car" aria-hidden="true"></i></div><div class="app-name">Regenerative braking</div><div class="app-desc">EVs convert braking kinetic energy back into stored electrical energy</div></div>
+    <div class="app-card"><div class="app-icon"><i class="ti ti-ruler" aria-hidden="true"></i></div><div class="app-name">Metal detectors</div><div class="app-desc">Opposing flux from induced eddy currents triggers the alarm signal</div></div>
+    <div class="app-card"><div class="app-icon"><i class="ti ti-motor" aria-hidden="true"></i></div><div class="app-name">Electric motors</div><div class="app-desc">Back-EMF (Lenz's law) self-regulates motor speed under varying loads</div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section" id="s4">
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <div>
+      <div class="section-title">Eddy Currents (Foucault Currents)</div>
+      <div class="section-subtitle">Circular induced currents in bulk conductors — simultaneously a nuisance and a powerful tool</div>
+    </div>
+  </div>
+  <div class="prose">
+    <p>When a solid conducting body — such as a metal plate, a block of copper, or the iron core of a transformer — is placed in a time-varying magnetic field, the changing flux induces EMF throughout the bulk of the material, not just along a defined wire. These internal EMFs drive closed loops of current that swirl through the material like eddies in a flowing river, giving rise to the name <em>eddy currents</em>. They were first studied in detail by the French physicist <strong>Léon Foucault</strong> in 1855, which is why they are also called Foucault currents.</p>
+    <p>Unlike current in a wire (which is confined to a narrow path), eddy currents spread out across whatever cross-sectional area is available in the conductor. Their planes are always perpendicular to the magnetic field that induces them. The magnitude of eddy currents depends on the electrical resistivity of the material, the rate of change of flux, and the geometry of the conductor — particularly its thickness, since thicker conductors offer lower resistance paths and allow larger currents to flow.</p>
+    <p>Because the metal has electrical resistance, these circulating currents dissipate energy as <em>Joule heat</em> (I²R heating). This is both the primary problem and the primary useful feature of eddy currents, depending on the application. In transformers and electric motors, this heating represents wasteful energy loss and must be minimized. The solution, discovered by the early electrical engineers, is to build cores from stacks of thin metal sheets (laminations) that are electrically insulated from each other. Each lamination is too thin to support large eddy current loops — the insulation breaks the circuit — so the currents are confined to tiny paths and their power loss drops dramatically. Modern transformer cores use laminations as thin as 0.3 mm.</p>
+    <p>On the other hand, when eddy current heating is exactly what is desired, the phenomenon becomes extremely useful. Induction cooktops pass a high-frequency alternating current through a flat coil beneath the cooking surface. The rapidly changing flux induces powerful eddy currents in the base of the metal pan sitting on top — the pan heats up directly, while the glass-ceramic surface between coil and pan remains cool. This makes induction cooking safer and far more energy-efficient than gas or conventional electric elements.</p>
+  </div>
+
+  <div class="formula-box">
+    <div class="formula-label">Power dissipated by eddy currents (Steinmetz approximation)</div>
+    <div class="formula-text">P_eddy = k_e · B²_max · f² · t² · V</div>
+    <div class="formula-desc">k_e = material-dependent constant | B_max = peak magnetic flux density (T) | f = frequency of alternating field (Hz) | t = thickness of the conductor (m) | V = volume of the conductor (m³).</div>
+    <div class="formula-extra">Key insight: P ∝ t² — halving the lamination thickness reduces eddy current losses to one-quarter. P ∝ f² — eddy current losses become very serious at high frequencies, which is why high-frequency transformers (radio, switching power supplies) use ferrite cores (non-conducting) instead of iron laminations.</div>
+  </div>
+
+  <div class="formula-box">
+    <div class="formula-label">Skin depth — where eddy currents actually flow</div>
+    <div class="formula-text">δ = √(ρ / (π · f · μ))</div>
+    <div class="formula-desc">δ = skin depth (m) — the depth at which the eddy current density falls to 1/e (~37%) of its surface value | ρ = electrical resistivity (Ω·m) | f = frequency (Hz) | μ = magnetic permeability (H/m). At high frequencies, eddy currents are confined to a very thin surface layer — this is the skin effect.</div>
+  </div>
+
+  <div class="callout">
+    <i class="ti ti-flame callout-icon" aria-hidden="true"></i>
+    <div class="callout-text">Induction hardening uses eddy currents to selectively heat the surface of a steel gear or camshaft to a precise depth (controlled by skin depth), then quench it rapidly. The result: a hard wear-resistant surface with a tough, ductile core. This process is responsible for the durability of automotive engine components.</div>
+  </div>
+
+  <div class="pros-cons">
+    <div class="pc-card pros">
+      <div class="pc-title"><i class="ti ti-circle-check" aria-hidden="true"></i> Useful applications</div>
+      <ul class="pc-list">
+        <li>Induction heating: cooktops, industrial furnaces, metal hardening</li>
+        <li>Electromagnetic damping: galvanometers, seismographs, balances</li>
+        <li>Eddy-current brakes: fairground rides, roller coasters, train brakes</li>
+        <li>Speedometers in vehicles (Weston type)</li>
+        <li>Non-destructive testing (NDT) of metal components for cracks</li>
+        <li>Electric energy meters (braking disc mechanism)</li>
+        <li>Induction hardening of steel surfaces</li>
+      </ul>
+    </div>
+    <div class="pc-card cons">
+      <div class="pc-title"><i class="ti ti-alert-circle" aria-hidden="true"></i> Harmful effects</div>
+      <ul class="pc-list">
+        <li>Energy losses as heat in transformer and motor cores</li>
+        <li>Overheating of cores reduces reliability and lifespan</li>
+        <li>Require expensive laminated construction in machines</li>
+        <li>At high frequency, cores must be replaced with ferrite (costly)</li>
+        <li>Can cause unwanted heating in metal chassis near RF circuits</li>
+        <li>Skin effect limits current-carrying capacity at high frequencies</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="apps-grid">
+    <div class="app-card"><div class="app-icon"><i class="ti ti-flame" aria-hidden="true"></i></div><div class="app-name">Induction cooktops</div><div class="app-desc">Heat the pan directly — the surface stays cool, only the pan heats up</div></div>
+    <div class="app-card"><div class="app-icon"><i class="ti ti-medical-cross" aria-hidden="true"></i></div><div class="app-name">MRI machines</div><div class="app-desc">Gradient coils induce eddy currents that enable spatial image encoding</div></div>
+    <div class="app-card"><div class="app-icon"><i class="ti ti-rotate" aria-hidden="true"></i></div><div class="app-name">Energy meters</div><div class="app-desc">Aluminium disc rotates at a rate proportional to power via eddy braking</div></div>
+    <div class="app-card"><div class="app-icon"><i class="ti ti-search" aria-hidden="true"></i></div><div class="app-name">NDT inspection</div><div class="app-desc">Eddy current probes detect subsurface cracks in aircraft components</div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section" id="s5">
+  <div class="section-header">
+    <div class="section-num">05</div>
+    <div>
+      <div class="section-title">Self-Induction</div>
+      <div class="section-subtitle">A coil opposing changes in its own current — electromagnetic inertia</div>
+    </div>
+  </div>
+  <div class="prose">
+    <p>When the current flowing through a coil changes, the magnetic flux produced by that current also changes. By Faraday's Law, this changing flux induces an EMF in the coil itself. By Lenz's Law, this self-induced EMF opposes the change in current that caused it. This property of a coil to oppose changes in its own current is called <em>self-induction</em>, and the induced EMF is called the <em>back-EMF</em> or <em>self-induced EMF</em>.</p>
+    <p>The quantitative measure of this property is the <em>coefficient of self-inductance</em>, L, measured in Henries (H). It depends entirely on the geometry of the coil — its number of turns, the area enclosed by each turn, its length, and the magnetic permeability of the core material. Iron cores dramatically increase L because iron has a permeability thousands of times greater than air, concentrating the flux enormously.</p>
+    <p>The physical analogy is striking and useful: self-inductance is the electromagnetic equivalent of mechanical inertia. Just as a massive object resists changes in velocity (and you must do work to accelerate or decelerate it), an inductor resists changes in current. The greater the inductance, the greater the resistance to change. When you switch off an inductive circuit suddenly, the inductor tries to maintain the current — driving voltage as high as needed to keep the electrons moving. This is why switching off an inductor can produce a brief but enormous voltage spike that can destroy semiconductor components if not controlled with a protection diode (flyback diode).</p>
+    <p>An inductor stores energy in its magnetic field, just as a capacitor stores energy in its electric field. The energy stored is ½LI² — dependent on both the inductance and the square of the current. This stored energy is returned to the circuit when the current decreases. This energy storage and release makes inductors essential components in switching power supplies, DC-DC converters, and resonant circuits.</p>
+  </div>
+
+  <div class="formula-box">
+    <div class="formula-label">Self-inductance, back-EMF and energy stored</div>
+    <div class="formula-text">Φ = L · I &nbsp;→&nbsp; ε = −L · (dI/dt) &nbsp;→&nbsp; U = ½ · L · I²</div>
+    <div class="formula-desc">L = Self-inductance (Henry, H) | I = Instantaneous current (A) | dI/dt = Rate of change of current (A/s) | ε = Back-EMF (V) | U = Energy stored in the magnetic field (J).</div>
+    <div class="formula-extra">For a solenoid: L = μ₀μᵣ · N² · A / l. Here μ₀ = 4π×10⁻⁷ H/m, μᵣ = relative permeability of core, N = total turns, A = cross-sectional area (m²), l = length of solenoid (m). An iron-core solenoid with μᵣ ≈ 5000 has 5000× the inductance of an identical air-core one.</div>
+  </div>
+
+  <div class="formula-box">
+    <div class="formula-label">Growth and decay of current in LR circuit</div>
+    <div class="formula-text">I(t) = I₀ · (1 − e^(−Rt/L)) &nbsp; (growth) &nbsp;|&nbsp; I(t) = I₀ · e^(−Rt/L) &nbsp; (decay)</div>
+    <div class="formula-desc">Time constant: τ = L/R (seconds). After one time constant, current has grown to 63.2% of final value (or decayed to 36.8%). After 5τ, the circuit is considered fully charged/discharged. This exponential behaviour is a direct consequence of the back-EMF opposing change.</div>
+  </div>
+
+  <div class="hq">"The inductor is the electromagnetic flywheel — it stores momentum in the form of magnetic energy and releases it back with equal stubbornness."</div>
+
+  <div class="subsection-title">Comparison: Inductor vs Capacitor vs Resistor</div>
+  <table class="exp-table">
+    <tr><th>Property</th><th>Resistor (R)</th><th>Capacitor (C)</th><th>Inductor (L)</th></tr>
+    <tr><td>Opposes</td><td>Current flow</td><td>Change in voltage</td><td>Change in current</td></tr>
+    <tr><td>Stores energy in</td><td>Nothing (dissipates)</td><td>Electric field (½CV²)</td><td>Magnetic field (½LI²)</td></tr>
+    <tr><td>Unit</td><td>Ohm (Ω)</td><td>Farad (F)</td><td>Henry (H)</td></tr>
+    <tr><td>At DC steady state</td><td>Constant voltage drop</td><td>Open circuit</td><td>Short circuit (wire)</td></tr>
+    <tr><td>At high frequency</td><td>Same</td><td>Short circuit</td><td>Open circuit (blocks AC)</td></tr>
+  </table>
+
+  <div class="pros-cons">
+    <div class="pc-card pros">
+      <div class="pc-title"><i class="ti ti-circle-check" aria-hidden="true"></i> Advantages</div>
+      <ul class="pc-list">
+        <li>Smooths and filters current fluctuations in power circuits</li>
+        <li>Stores energy in the magnetic field and returns it efficiently</li>
+        <li>Essential in LC oscillators and radio tuning circuits</li>
+        <li>Protects circuits from sudden current spikes (current cannot change instantaneously)</li>
+        <li>Key component in boost/buck converters (switching power supplies)</li>
+        <li>Blocks high-frequency AC while passing DC (used in audio crossovers)</li>
+      </ul>
+    </div>
+    <div class="pc-card cons">
+      <div class="pc-title"><i class="ti ti-alert-circle" aria-hidden="true"></i> Drawbacks</div>
+      <ul class="pc-list">
+        <li>Back-EMF spikes can destroy transistors — requires snubber circuits</li>
+        <li>Physically large and heavy at low frequencies</li>
+        <li>Coil resistance causes I²R energy losses (not ideal)</li>
+        <li>Magnetically sensitive — fields can interfere with nearby components</li>
+        <li>Slow current response can be problematic in fast-switching circuits</li>
+        <li>Saturation of iron cores at high currents reduces effective inductance</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="apps-grid">
+    <div class="app-card"><div class="app-icon"><i class="ti ti-cpu" aria-hidden="true"></i></div><div class="app-name">Power supply chokes</div><div class="app-desc">Smooths ripple in DC output of rectifiers; part of every phone charger</div></div>
+    <div class="app-card"><div class="app-icon"><i class="ti ti-antenna" aria-hidden="true"></i></div><div class="app-name">Radio tuning (LC)</div><div class="app-desc">LC resonant circuit selects a specific broadcast frequency</div></div>
+    <div class="app-card"><div class="app-icon"><i class="ti ti-circuit-diode" aria-hidden="true"></i></div><div class="app-name">Fluorescent ballasts</div><div class="app-desc">Inductor limits and stabilises current through discharge tubes</div></div>
+    <div class="app-card"><div class="app-icon"><i class="ti ti-battery-charging" aria-hidden="true"></i></div><div class="app-name">DC–DC converters</div><div class="app-desc">Boost/buck circuits in laptops and phone chargers use inductors for voltage conversion</div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section" id="s6">
+  <div class="section-header">
+    <div class="section-num">06</div>
+    <div>
+      <div class="section-title">Mutual Induction</div>
+      <div class="section-subtitle">Two coils sharing magnetic energy — the principle that makes transformers possible</div>
+    </div>
+  </div>
+  <div class="prose">
+    <p>Mutual induction is the phenomenon where a changing current in one coil (the <em>primary</em>) induces an EMF in a second, nearby coil (the <em>secondary</em>) through the medium of a shared magnetic field. No electrical connection exists between the two coils — the energy transfer occurs entirely via the changing magnetic flux that links them. This is the principle at the heart of transformers, wireless charging, and electrical isolation.</p>
+    <p>The quantitative measure is the <em>coefficient of mutual inductance</em>, M, measured in Henries (H). M depends on the geometry of both coils, their relative orientation and distance, and the permeability of any core material between them. Neumann's formula (a surface integral) gives the exact value for any coil geometry, but for practical calculations, M is usually determined experimentally or from manufacturer specifications.</p>
+    <p>The coupling coefficient k (0 ≤ k ≤ 1) measures how well the flux from the primary links with the secondary. k = 1 (perfect coupling, no flux leakage) is the ideal transformer approximation. In practice, k is always less than 1 — some flux takes paths that don't thread through the secondary, and this leakage flux reduces the effective mutual inductance. Transformer designers use U-shaped and I-shaped iron cores that form a closed magnetic circuit, minimising leakage and achieving k values of 0.99 or above.</p>
+    <p>Wireless charging systems (Qi standard) typically achieve k values of 0.3–0.7 depending on alignment — this is why wireless charging is less efficient than wired, and why misaligning your phone on the pad reduces charging speed. Near-field communication (NFC) for contactless payment also relies on mutual induction, operating at 13.56 MHz with k values well below 0.1, which is why the card must be held very close to the reader.</p>
+    <p>The ideal transformer, derived entirely from mutual induction, is one of the most practically important devices ever built. It allows electrical power to be transmitted at extremely high voltages (reducing current and thus I²R losses in cables), then stepped down to safe usable voltages near the consumer. Without transformers — and hence without mutual induction — the entire modern electrical grid would be impossible.</p>
+  </div>
+
+  <div class="formula-box">
+    <div class="formula-label">Mutual inductance, induced EMF and coupling coefficient</div>
+    <div class="formula-text">Φ₂₁ = M · I₁ &nbsp;→&nbsp; ε₂ = −M · (dI₁/dt)</div>
+    <div class="formula-desc">M = Mutual inductance (Henry, H) | Φ₂₁ = Flux through secondary due to primary current I₁ | ε₂ = EMF induced in secondary (V) | dI₁/dt = Rate of change of primary current (A/s). Note: M₁₂ = M₂₁ always — mutual inductance is symmetric.</div>
+    <div class="formula-extra">Coupling coefficient: M = k · √(L₁ · L₂), where 0 ≤ k ≤ 1. Maximum possible M = √(L₁·L₂) when k = 1 (all flux from coil 1 passes through coil 2). Energy stored in a mutually coupled system: U = ½L₁I₁² + ½L₂I₂² ± MI₁I₂ (sign depends on current directions).</div>
+  </div>
+
+  <div class="formula-box">
+    <div class="formula-label">Ideal transformer equations (derived from mutual induction)</div>
+    <div class="formula-text">V₂/V₁ = N₂/N₁ = I₁/I₂ &nbsp;&nbsp;|&nbsp;&nbsp; V₁I₁ = V₂I₂ (ideal: P_in = P_out)</div>
+    <div class="formula-desc">V = voltage (V) | N = number of turns | I = current (A). Step-up transformer: N₂ > N₁, so V₂ > V₁ (voltage increases, current decreases). Step-down: N₂ < N₁. For an ideal transformer, power is perfectly conserved. Real transformers have efficiency 95–99% due to copper and iron losses.</div>
+    <div class="formula-extra">Transmission line efficiency: Power loss P_loss = I²R. If voltage is stepped up by factor 10, current drops by 10, so losses drop by factor 100. India's national grid transmits at 765 kV — stepped up from generation voltage of ~11–25 kV — to minimise cable losses over hundreds of kilometres.</div>
+  </div>
+
+  <div class="callout">
+    <i class="ti ti-bulb callout-icon" aria-hidden="true"></i>
+    <div class="callout-text">Neumann's formula for mutual inductance of two arbitrary loops: M = (μ₀/4π) ∮∮ (dl₁ · dl₂)/r₁₂, where the double line integral is taken over both loops and r₁₂ is the distance between current elements. This confirms that M₁₂ = M₂₁ — a profound result: the effect of coil 1 on coil 2 is always identical to the effect of coil 2 on coil 1.</div>
+  </div>
+
+  <div class="subsection-title">Types of transformers and their applications</div>
+  <table class="exp-table">
+    <tr><th>Type</th><th>Turn ratio (N₂/N₁)</th><th>Function</th><th>Application</th></tr>
+    <tr><td>Step-up</td><td>&gt; 1</td><td>Increases voltage, decreases current</td><td>Power station output to grid</td></tr>
+    <tr><td>Step-down</td><td>&lt; 1</td><td>Decreases voltage, increases current</td><td>Distribution to homes (230 V)</td></tr>
+    <tr><td>Isolation</td><td>= 1</td><td>Same voltage, no electrical connection</td><td>Medical equipment safety</td></tr>
+    <tr><td>Audio</td><td>Variable</td><td>Impedance matching</td><td>Amplifier output to speaker</td></tr>
+    <tr><td>Pulse</td><td>Variable</td><td>Transmit digital pulses</td><td>Ethernet LAN transformers</td></tr>
+  </table>
+
+  <div class="pros-cons">
+    <div class="pc-card pros">
+      <div class="pc-title"><i class="ti ti-circle-check" aria-hidden="true"></i> Advantages</div>
+      <ul class="pc-list">
+        <li>Enables long-distance power transmission with minimal losses</li>
+        <li>No electrical contact between circuits — complete galvanic isolation</li>
+        <li>Foundation of wireless power and wireless data transfer (NFC, Qi)</li>
+        <li>Allows safe voltage transformation at any ratio simply by changing turns</li>
+        <li>Very high efficiency (95–99%) in well-designed transformers</li>
+        <li>Used in medical implants — powering pacemakers without surgery to change batteries</li>
+        <li>Enables electrical isolation for patient safety in hospitals</li>
+      </ul>
+    </div>
+    <div class="pc-card cons">
+      <div class="pc-title"><i class="ti ti-alert-circle" aria-hidden="true"></i> Limitations</div>
+      <ul class="pc-list">
+        <li>Works only with changing (AC) currents — cannot transform DC directly</li>
+        <li>Leakage flux reduces coupling and efficiency</li>
+        <li>Core losses (hysteresis + eddy currents) cause heating</li>
+        <li>Requires iron core — adds weight, size and cost</li>
+        <li>Wireless (low-k) systems are significantly less efficient than wired</li>
+        <li>Misalignment of coils in wireless systems degrades performance sharply</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="apps-grid">
+    <div class="app-card"><div class="app-icon"><i class="ti ti-bolt" aria-hidden="true"></i></div><div class="app-name">Power grid transformers</div><div class="app-desc">765 kV step-up at power stations; step-down to 230 V at homes</div></div>
+    <div class="app-card"><div class="app-icon"><i class="ti ti-device-watch" aria-hidden="true"></i></div><div class="app-name">Wireless Qi charging</div><div class="app-desc">k ≈ 0.3–0.7 coil pairs charge phones, earbuds and smartwatches</div></div>
+    <div class="app-card"><div class="app-icon"><i class="ti ti-stethoscope" aria-hidden="true"></i></div><div class="app-name">Medical implants</div><div class="app-desc">Pacemakers and cochlear implants recharged transcutaneously</div></div>
+    <div class="app-card"><div class="app-icon"><i class="ti ti-wifi" aria-hidden="true"></i></div><div class="app-name">NFC / RFID</div><div class="app-desc">Contactless card payment and supply-chain tagging via 13.56 MHz mutual induction</div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section" id="s7">
+  <div class="conclusion">
+    <h3>Conclusion</h3>
+    <div class="prose">
+      <p>Electromagnetic induction is far more than a chapter in a physics textbook. It is the fundamental mechanism through which humanity learned to convert mechanical motion into electrical energy at scale — and it remains, nearly two centuries after Faraday's discovery, the principle behind the vast majority of electricity generation on Earth. Coal plants, nuclear plants, hydroelectric dams, and wind turbines all ultimately work by spinning a coil inside a magnetic field: Faraday's experiment with a magnet and a galvanometer, scaled up by a factor of billions.</p>
+      <p>The six concepts covered in this project form a tightly interlocked set of ideas. Faraday's Laws give us the quantitative foundation: changing flux produces EMF proportional to the rate of change. Lenz's Law provides the physical direction of the induced current and connects induction to the conservation of energy — reminding us that electricity is never created from nothing. Eddy currents show how induction operates in bulk matter, with consequences both wasteful and highly useful. Self-induction reveals that a coil can interact with its own field, storing energy and resisting change like an electromagnetic flywheel. And mutual induction shows how two coils can exchange energy across empty space — the principle that powers every transformer on the grid and every wireless charger on every desk.</p>
+      <p>The mathematical thread running through all six concepts is identical: ε = −dΦ/dt. A single equation, with a single negative sign, encodes the entire subject. That elegance — complex real-world technology derived from a beautifully simple mathematical relationship — is perhaps the most inspiring lesson this chapter offers a student of physics.</p>
+      <p>As technology advances, electromagnetic induction continues to find new applications: transcranial magnetic stimulation (TMS) for treating depression, inductive power transfer for electric buses that charge while driving, wireless charging over distances of several metres, and the quantum inductors in superconducting quantum computers. The phenomenon Faraday observed in 1831 is far from exhausted.</p>
+    </div>
+
+    <div class="stat-row" style="margin-top:1.5rem">
+      <div class="stat"><div class="stat-val">6</div><div class="stat-label">Core concepts covered</div></div>
+      <div class="stat"><div class="stat-val">12+</div><div class="stat-label">Formulas & equations</div></div>
+      <div class="stat"><div class="stat-val">20+</div><div class="stat-label">Real-world applications</div></div>
+      <div class="stat"><div class="stat-val">1831</div><div class="stat-label">Year it all began</div></div>
+    </div>
+
+    <div class="refs">
+      <h4>References & Bibliography</h4>
+      <ul>
+        <li>NCERT Physics Part I, Class XII — Chapter 6: Electromagnetic Induction (latest edition)</li>
+        <li>H.C. Verma — Concepts of Physics, Vol. 2, Ch. 38: Electromagnetic Induction</li>
+        <li>Halliday, Resnick & Krane — Fundamentals of Physics, 10th Ed., Ch. 30–31</li>
+        <li>Griffiths, D.J. — Introduction to Electrodynamics, 4th Ed., Ch. 7</li>
+        <li>Nayfeh & Brussel — Electricity and Magnetism (advanced reference)</li>
+        <li>IEEE Standards — Transformer Design and Eddy Current Loss Calculations</li>
+        <li>Faraday, M. (1832) — Experimental Researches in Electricity, Phil. Trans. Royal Society</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</div>
